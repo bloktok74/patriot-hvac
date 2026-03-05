@@ -798,6 +798,87 @@
       transform: translateY(-2px);
     }
 
+    /* ═══ CTA FORM ═══ */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .cta-left { text-align: left; }
+    .cta-left h2 { text-align: left; }
+    .cta-left p { text-align: left; }
+    .cta-form {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-xl);
+      padding: var(--space-lg);
+    }
+    .cta-form h3 {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+    .cta-form .form-group { margin-bottom: var(--space-sm); }
+    .cta-form label {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .cta-form input,
+    .cta-form select,
+    .cta-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .cta-form input::placeholder,
+    .cta-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+    .cta-form input:focus,
+    .cta-form select:focus,
+    .cta-form textarea:focus { border-color: rgba(255,255,255,0.5); }
+    .cta-form select { appearance: none; cursor: pointer; }
+    .cta-form select option { background: var(--color-navy); color: #fff; }
+    .cta-form textarea { resize: vertical; min-height: 80px; }
+    .cta-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+    .cta-form button[type="submit"] {
+      width: 100%;
+      margin-top: var(--space-sm);
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+    }
+    .form-success.show { display: block; }
+    .form-success i { font-size: 3rem; color: #fff; margin-bottom: var(--space-sm); }
+    .form-success h3 { color: #fff; margin-bottom: var(--space-xs); }
+    .form-success p { color: rgba(255,255,255,0.8); }
+    @media (max-width: 768px) {
+      .cta-grid { grid-template-columns: 1fr; }
+      .cta-left { text-align: center; }
+      .cta-left h2 { text-align: center; }
+      .cta-left p { text-align: center; }
+      .cta-form .form-row { grid-template-columns: 1fr; }
+    }
+
     /* ═══ SERVICE AREAS ═══ */
     .areas {
       padding: var(--space-3xl) 0;
@@ -1298,15 +1379,63 @@
     </div>
   </section>
 
-  <!-- ═══ CTA ═══ -->
+  <!-- ═══ CTA + FORM ═══ -->
   <section class="cta" id="contact">
     <div class="container">
-      <div class="cta-content reveal">
-        <h2>Ready for Reliable HVAC Service?</h2>
-        <p>Get a free estimate today. No obligation, no pressure — just honest advice from a team that puts your comfort first.</p>
-        <div class="cta-btns">
-          <a href="tel:6572891824" class="btn btn-white"><i class="fa-solid fa-phone"></i> (657) 289-1824</a>
-          <a href="mailto:info@veteranairusa.net" class="btn btn-outline"><i class="fa-solid fa-envelope"></i> Email Us</a>
+      <div class="cta-grid reveal">
+        <div class="cta-left">
+          <h2>Ready for Reliable HVAC Service?</h2>
+          <p>Fill out the form and we'll get back to you within the hour — or call us directly for immediate assistance.</p>
+          <a href="tel:6572891824" class="btn btn-white" style="margin-top:16px"><i class="fa-solid fa-phone"></i> (657) 289-1824</a>
+          <div style="margin-top:24px; color:rgba(255,255,255,0.5); font-size:0.85rem;">
+            <p><i class="fa-solid fa-clock" style="margin-right:6px"></i> Mon–Fri 7AM–6PM &bull; Sat 8AM–4PM</p>
+            <p style="margin-top:4px"><i class="fa-solid fa-location-dot" style="margin-right:6px"></i> 2925 E Ricker Way, Anaheim, CA 92806</p>
+          </div>
+        </div>
+        <div class="cta-form">
+          <h3><i class="fa-solid fa-calendar-check" style="margin-right:8px"></i> Request Service</h3>
+          <form id="serviceForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+            <input type="hidden" name="subject" value="New Service Request — Veteran Air USA">
+            <input type="hidden" name="from_name" value="Veteran Air Website">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" placeholder="John Smith" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone *</label>
+                <input type="tel" id="phone" name="phone" placeholder="(714) 555-1234" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Address / City</label>
+              <input type="text" id="address" name="address" placeholder="123 Main St, Anaheim">
+            </div>
+            <div class="form-group">
+              <label for="service">Service Needed *</label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>Select a service...</option>
+                <option value="AC Repair">AC Repair</option>
+                <option value="AC Installation">AC Installation</option>
+                <option value="Heating Repair">Heating Repair</option>
+                <option value="Maintenance / Tune-Up">Maintenance / Tune-Up</option>
+                <option value="Ductwork">Ductwork</option>
+                <option value="Commercial HVAC">Commercial HVAC</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Tell us more (optional)</label>
+              <textarea id="message" name="message" placeholder="AC stopped blowing cold air, unit is about 10 years old..." rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-white" id="submitBtn"><i class="fa-solid fa-paper-plane"></i> Send Request</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <i class="fa-solid fa-circle-check"></i>
+            <h3>Request Received!</h3>
+            <p>We'll call you back shortly. For immediate help, call (657) 289-1824.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1422,6 +1551,35 @@
         }
       });
     });
+
+    // Service request form handler
+    const serviceForm = document.getElementById('serviceForm');
+    if (serviceForm) {
+      serviceForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+          });
+          if (res.ok) {
+            serviceForm.style.display = 'none';
+            document.getElementById('formSuccess').classList.add('show');
+          } else {
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Request';
+            btn.disabled = false;
+            alert('Something went wrong. Please call us at (657) 289-1824.');
+          }
+        } catch {
+          btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Request';
+          btn.disabled = false;
+          alert('Something went wrong. Please call us at (657) 289-1824.');
+        }
+      });
+    }
   </script>
 </body>
 </html>
