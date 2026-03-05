@@ -1,0 +1,1406 @@
+<!--
+  REBUILT SITE: veteranairusa.net
+  Original audit: Wix-based site with JS-rendered content, slow load, generic layout, weak mobile experience.
+  Design direction: Clean Authority with patriotic warmth — navy, white, red accent, gold military touches.
+  Key improvements: 1) Fast static HTML 2) Strong hero with clear CTA 3) Trust-forward with reviews/badges 4) Mobile-first responsive 5) Scroll animations
+  Preserved functionality: Service info, contact details, service request flow
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veteran Air USA | Orange County's #1 Rated HVAC Company</title>
+  <meta name="description" content="Veteran-owned HVAC company serving Orange County since 2009. AC repair, installation, maintenance & heating services. Call (657) 289-1824.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════
+       DESIGN SYSTEM
+    ═══════════════════════════════════════════════ */
+    :root {
+      --color-bg: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e2e6ed;
+      --color-text: #1a2332;
+      --color-muted: #5a6a7e;
+      --color-accent: #c8102e;
+      --color-accent-dark: #a00d24;
+      --color-navy: #0a1628;
+      --color-navy-light: #132040;
+      --color-gold: #c9a84c;
+      --color-gold-light: #f0e6c8;
+      --color-blue: #1e3a5f;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Source Sans 3', sans-serif;
+
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 32px;
+      --space-xl: 48px;
+      --space-2xl: 64px;
+      --space-3xl: 96px;
+      --space-4xl: 128px;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+
+      --shadow-sm: 0 1px 3px rgba(10,22,40,0.06);
+      --shadow-md: 0 4px 16px rgba(10,22,40,0.08);
+      --shadow-lg: 0 8px 32px rgba(10,22,40,0.12);
+      --shadow-xl: 0 16px 48px rgba(10,22,40,0.16);
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+
+    /* ═══ TYPOGRAPHY ═══ */
+    h1, h2, h3, h4, h5 { font-family: var(--font-display); line-height: 1.15; letter-spacing: -0.02em; }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; }
+    h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); font-weight: 700; }
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ UTILITIES ═══ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-md); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(200,16,46,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--color-accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(200,16,46,0.4);
+    }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.7);
+    }
+    .btn-navy {
+      background: var(--color-navy);
+      color: #fff;
+    }
+    .btn-navy:hover {
+      background: var(--color-navy-light);
+      transform: translateY(-2px);
+    }
+
+    /* ═══ SCROLL ANIMATIONS ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ═══ HEADER / NAV ═══ */
+    .topbar {
+      background: var(--color-navy);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
+      padding: var(--space-xs) 0;
+    }
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .topbar a { color: var(--color-gold); font-weight: 600; }
+    .topbar a:hover { color: var(--color-gold-light); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: box-shadow 0.3s ease;
+    }
+    header.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-sm) 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-navy);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      font-size: 1.4rem;
+    }
+    .logo-text {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--color-navy);
+      line-height: 1.1;
+    }
+    .logo-text span { color: var(--color-accent); }
+    .logo-sub {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--color-navy); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent);
+      transition: width 0.2s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .nav-phone {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-navy);
+    }
+    .nav-phone i { color: var(--color-accent); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: var(--space-xs);
+    }
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: var(--color-navy);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-navy);
+      z-index: 200;
+      padding: var(--space-xl);
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-close {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      background: none;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .mobile-menu a {
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .mobile-menu .btn-primary { margin-top: var(--space-md); text-align: center; justify-content: center; }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 40%, var(--color-blue) 100%);
+      position: relative;
+      overflow: hidden;
+      padding: var(--space-3xl) 0 var(--space-4xl);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(200,16,46,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--color-gold);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+    }
+    .hero h1 { color: #fff; margin-bottom: var(--space-md); }
+    .hero h1 .accent { color: var(--color-accent); }
+    .hero-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-lg);
+      max-width: 520px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+    }
+    .hero-stats {
+      display: flex;
+      gap: var(--space-xl);
+    }
+    .hero-stat {
+      text-align: left;
+    }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .hero-stat-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+    .hero-visual {
+      position: relative;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      position: relative;
+    }
+    .hero-card-badge {
+      position: absolute;
+      top: -16px;
+      right: var(--space-md);
+      background: var(--color-gold);
+      color: var(--color-navy);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+    }
+    .hero-review {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: var(--space-md);
+    }
+    .hero-review-stars { color: var(--color-gold); margin-bottom: var(--space-sm); font-size: 1.2rem; }
+    .hero-reviewer {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .hero-reviewer-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .hero-reviewer-name {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .hero-reviewer-source {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.8rem;
+    }
+    .hero-card-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-card-stat {
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm);
+      text-align: center;
+    }
+    .hero-card-stat-num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--color-gold);
+      font-size: 1.3rem;
+    }
+    .hero-card-stat-label {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ═══ TRUST BAR ═══ */
+    .trust-bar {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-md) 0;
+    }
+    .trust-bar-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+    .trust-item i { color: var(--color-gold); font-size: 1.1rem; }
+    .trust-item strong { color: var(--color-navy); }
+
+    /* ═══ SERVICES ═══ */
+    .services { padding: var(--space-3xl) 0; }
+    .section-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto var(--space-2xl);
+    }
+    .section-label {
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+    .section-header h2 { margin-bottom: var(--space-sm); }
+    .section-header p { color: var(--color-muted); font-size: 1.1rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .service-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-accent), var(--color-gold));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--color-navy), var(--color-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      font-size: 1.4rem;
+      margin-bottom: var(--space-md);
+    }
+    .service-card h3 { margin-bottom: var(--space-xs); }
+    .service-card p { color: var(--color-muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ═══ WHY US ═══ */
+    .why-us {
+      padding: var(--space-3xl) 0;
+      background: var(--color-navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .why-us::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='60' height='60' fill='url(%23grid)'/%3E%3C/svg%3E");
+    }
+    .why-us .section-header h2 { color: #fff; }
+    .why-us .section-header p { color: rgba(255,255,255,0.6); }
+    .why-us .section-label { color: var(--color-gold); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+    .why-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      display: flex;
+      gap: var(--space-md);
+      transition: all 0.3s ease;
+    }
+    .why-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(201,168,76,0.3);
+    }
+    .why-card-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: var(--radius-sm);
+      background: rgba(201,168,76,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      font-size: 1.2rem;
+    }
+    .why-card h3 { color: #fff; margin-bottom: var(--space-xs); font-size: 1.1rem; }
+    .why-card p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.7; }
+
+    /* ═══ PROCESS ═══ */
+    .process { padding: var(--space-3xl) 0; }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-border), var(--color-accent), var(--color-gold), var(--color-border));
+    }
+    .process-step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .process-num {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-bg);
+      border: 3px solid var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--color-accent);
+      margin: 0 auto var(--space-md);
+    }
+    .process-step h3 { margin-bottom: var(--space-xs); }
+    .process-step p { color: var(--color-muted); font-size: 0.9rem; }
+
+    /* ═══ REVIEWS ═══ */
+    .reviews {
+      padding: var(--space-3xl) 0;
+      background: var(--color-surface);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .review-card {
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      transition: all 0.3s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .review-stars { color: var(--color-gold); margin-bottom: var(--space-sm); font-size: 1rem; }
+    .review-text {
+      color: var(--color-text);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: var(--space-md);
+    }
+    .review-author { font-weight: 700; font-size: 0.9rem; }
+    .review-source { color: var(--color-muted); font-size: 0.8rem; }
+
+    /* ═══ ABOUT / VETERAN ═══ */
+    .about {
+      padding: var(--space-3xl) 0;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+    .about-visual {
+      background: linear-gradient(135deg, var(--color-navy), var(--color-blue));
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      position: relative;
+      overflow: hidden;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .about-visual::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .about-flag {
+      font-size: 4rem;
+      margin-bottom: var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+    .about-visual h3 {
+      color: #fff;
+      font-size: 1.8rem;
+      margin-bottom: var(--space-sm);
+      position: relative;
+      z-index: 1;
+    }
+    .about-visual p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+    .about-military-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--color-gold);
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+    .about-content .section-label { color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .about-content h2 { margin-bottom: var(--space-md); }
+    .about-content p { color: var(--color-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: var(--space-md); }
+    .about-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    .about-detail {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      background: var(--color-surface);
+      border-radius: var(--radius-sm);
+    }
+    .about-detail i { color: var(--color-accent); font-size: 1.1rem; width: 20px; text-align: center; }
+    .about-detail span { font-weight: 600; font-size: 0.9rem; }
+
+    /* ═══ CTA ═══ */
+    .cta {
+      padding: var(--space-3xl) 0;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cta-content {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta h2 { color: #fff; margin-bottom: var(--space-sm); }
+    .cta p { color: rgba(255,255,255,0.85); font-size: 1.15rem; margin-bottom: var(--space-lg); }
+    .cta-btns {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--color-accent);
+      font-weight: 700;
+    }
+    .btn-white:hover {
+      background: rgba(255,255,255,0.9);
+      transform: translateY(-2px);
+    }
+
+    /* ═══ SERVICE AREAS ═══ */
+    .areas {
+      padding: var(--space-3xl) 0;
+    }
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-sm);
+    }
+    .area-tag {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-md);
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-navy);
+      transition: all 0.2s ease;
+    }
+    .area-tag:hover {
+      background: var(--color-navy);
+      color: #fff;
+      border-color: var(--color-navy);
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: var(--color-navy);
+      padding: var(--space-2xl) 0 var(--space-md);
+      color: rgba(255,255,255,0.7);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+    .footer-brand .logo-text { color: #fff; font-size: 1.3rem; }
+    .footer-brand .logo-text span { color: var(--color-accent); }
+    .footer-brand p {
+      margin-top: var(--space-sm);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .footer-social {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.2s ease;
+    }
+    .footer-social a:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      margin-bottom: var(--space-md);
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: var(--space-xs); }
+    .footer-col a {
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    .footer-col a:hover { color: var(--color-gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ═══ STICKY MOBILE CTA ═══ */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-navy);
+      padding: var(--space-sm);
+      z-index: 90;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
+    }
+    .sticky-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      background: var(--color-accent);
+      color: #fff;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta .btn { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero { padding: var(--space-2xl) 0 var(--space-3xl); }
+      .hero-stats { gap: var(--space-lg); }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+      .process-steps::before { display: none; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .areas-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: var(--space-xs); text-align: center; }
+      .sticky-cta { display: block; }
+      footer { padding-bottom: 80px; }
+      .trust-bar-inner { gap: var(--space-md); }
+      .about-details { grid-template-columns: 1fr; }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-stats { flex-direction: column; gap: var(--space-sm); }
+      .hero-btns { flex-direction: column; }
+      .hero-btns .btn { justify-content: center; }
+      .areas-grid { grid-template-columns: 1fr; }
+      .topbar-inner { justify-content: center; text-align: center; }
+    }
+
+    /* ═══ KEYFRAMES ═══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge { animation: fadeUp 0.6s ease forwards; }
+    .hero h1 { animation: fadeUp 0.6s ease 0.1s forwards; opacity: 0; }
+    .hero-sub { animation: fadeUp 0.6s ease 0.2s forwards; opacity: 0; }
+    .hero-btns { animation: fadeUp 0.6s ease 0.3s forwards; opacity: 0; }
+    .hero-stats { animation: fadeUp 0.6s ease 0.4s forwards; opacity: 0; }
+    .hero-card { animation: fadeUp 0.8s ease 0.3s forwards; opacity: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ TOP BAR ═══ -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span><i class="fa-solid fa-flag-usa"></i> Veteran Owned & Operated — Proudly Serving Orange County Since 2009</span>
+      <span>
+        <a href="tel:6572891824"><i class="fa-solid fa-phone"></i> (657) 289-1824</a>
+        &nbsp;&bull;&nbsp;
+        <span>Mon–Fri 7AM–6PM &bull; Sat 8AM–4PM</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header id="header">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <div class="logo-text">VETERAN <span>AIR</span></div>
+          <div class="logo-sub">Heating & Air Conditioning</div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:6572891824" class="nav-phone"><i class="fa-solid fa-phone"></i> (657) 289-1824</a>
+        <a href="#contact" class="btn btn-primary">Free Estimate</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#why-us" onclick="toggleMenu()">Why Us</a>
+    <a href="#process" onclick="toggleMenu()">How It Works</a>
+    <a href="#reviews" onclick="toggleMenu()">Reviews</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="tel:6572891824" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call (657) 289-1824</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fa-solid fa-star"></i> #1 Rated HVAC in Orange County</div>
+        <h1>Your Comfort.<br>Our <span class="accent">Mission.</span></h1>
+        <p class="hero-sub">
+          Veteran-owned since 2009. We bring military precision to every AC repair, installation, and maintenance job across Orange County.
+        </p>
+        <div class="hero-btns">
+          <a href="tel:6572891824" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Now — Free Estimate</a>
+          <a href="#services" class="btn btn-outline"><i class="fa-solid fa-wrench"></i> View Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">15+</div>
+            <div class="hero-stat-label">Years in Business</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">477+</div>
+            <div class="hero-stat-label">5-Star Reviews</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">10K+</div>
+            <div class="hero-stat-label">Homes Serviced</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-badge"><i class="fa-solid fa-star"></i> Verified Review</div>
+          <div class="hero-review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="hero-review">"I cannot say enough good things about Veteran Air! The owner is the kindest guy around. Professional, honest, and their work is absolutely top-notch."</p>
+          <div class="hero-reviewer">
+            <div class="hero-reviewer-avatar">JM</div>
+            <div>
+              <div class="hero-reviewer-name">Jennifer M.</div>
+              <div class="hero-reviewer-source">Yelp Review</div>
+            </div>
+          </div>
+          <div class="hero-card-stats">
+            <div class="hero-card-stat">
+              <div class="hero-card-stat-num">4.8</div>
+              <div class="hero-card-stat-label">Yelp Rating</div>
+            </div>
+            <div class="hero-card-stat">
+              <div class="hero-card-stat-num">5.0</div>
+              <div class="hero-card-stat-label">Google Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRUST BAR ═══ -->
+  <div class="trust-bar">
+    <div class="container trust-bar-inner">
+      <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> <strong>Veteran Owned</strong></div>
+      <div class="trust-item"><i class="fa-solid fa-certificate"></i> <strong>Licensed & Insured</strong></div>
+      <div class="trust-item"><i class="fa-solid fa-star"></i> <strong>477+ Reviews</strong></div>
+      <div class="trust-item"><i class="fa-solid fa-clock"></i> <strong>Same-Day Service</strong></div>
+      <div class="trust-item"><i class="fa-solid fa-tags"></i> <strong>Military Discount</strong></div>
+    </div>
+  </div>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label section-label">What We Do</p>
+        <h2>Complete HVAC Solutions for Home & Business</h2>
+        <p>From emergency repairs to full system installations, we've got Orange County covered.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <h3>AC Repair</h3>
+          <p>Fast, reliable air conditioning repair. We diagnose the problem right the first time and fix it — no upselling, no games. Same-day service available.</p>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon"><i class="fa-solid fa-snowflake"></i></div>
+          <h3>AC Installation</h3>
+          <p>New system installation done right. We size your system properly, install with precision, and make sure you're cool on day one. All major brands.</p>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+          <h3>Maintenance & Tune-Ups</h3>
+          <p>Preventative maintenance keeps your system running efficiently and extends its life. Annual tune-ups catch small problems before they become big bills.</p>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon"><i class="fa-solid fa-fire"></i></div>
+          <h3>Heating Repair</h3>
+          <p>Furnace acting up? Heater blowing cold? We repair all heating systems — furnaces, heat pumps, wall heaters, and more. Fast response, fair pricing.</p>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon"><i class="fa-solid fa-wind"></i></div>
+          <h3>Ductwork</h3>
+          <p>Leaky ducts waste energy and money. We repair, replace, and install ductwork to maximize your system's efficiency and keep every room comfortable.</p>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon"><i class="fa-solid fa-building"></i></div>
+          <h3>Commercial HVAC</h3>
+          <p>Business needs reliable climate control. We service commercial AC and heating systems for offices, retail, restaurants, and warehouses across OC.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHY US ═══ -->
+  <section class="why-us" id="why-us">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label section-label">Why Veteran Air</p>
+        <h2>Built on Discipline. Driven by Service.</h2>
+        <p>We bring the same integrity, reliability, and work ethic from the military into every home we serve.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal reveal-delay-1">
+          <div class="why-card-icon"><i class="fa-solid fa-handshake"></i></div>
+          <div>
+            <h3>Honest Pricing, Always</h3>
+            <p>We quote fair and stick to it. No hidden fees, no surprise charges, no "well, actually..." after the work starts. The price we quote is the price you pay.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <div class="why-card-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div>
+            <h3>Fast Response Times</h3>
+            <p>When your AC goes out in a Southern California summer, every hour matters. We offer same-day service and show up when we say we will.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-3">
+          <div class="why-card-icon"><i class="fa-solid fa-medal"></i></div>
+          <div>
+            <h3>Military-Grade Standards</h3>
+            <p>Our technicians are trained to the highest standards. Clean workspaces, on-time arrivals, thorough work. We treat your home like our own.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-4">
+          <div class="why-card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <h3>Licensed, Insured, Guaranteed</h3>
+            <p>Fully licensed and insured in the state of California. Every job comes with our satisfaction guarantee — if it's not right, we make it right.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESS ═══ -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label section-label">How It Works</p>
+        <h2>Simple. Honest. Professional.</h2>
+        <p>Getting your HVAC system serviced shouldn't be complicated. Here's how we make it easy.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-num">1</div>
+          <h3>Call or Book Online</h3>
+          <p>Reach us by phone or request service online. We'll schedule a time that works for you — often the same day.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-num">2</div>
+          <h3>Free Diagnosis</h3>
+          <p>Our certified technician arrives on time, inspects your system, and explains exactly what's going on — no jargon, no pressure.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="process-num">3</div>
+          <h3>Upfront Quote</h3>
+          <p>You get a clear, written estimate before any work begins. No surprises. You approve it, we get to work.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-4">
+          <div class="process-num">4</div>
+          <h3>Done Right</h3>
+          <p>We complete the job, clean up, and walk you through everything. Your comfort is restored — guaranteed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ REVIEWS ═══ -->
+  <section class="reviews" id="reviews">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label section-label">Customer Reviews</p>
+        <h2>Orange County's Most Trusted HVAC Team</h2>
+        <p>Don't just take our word for it. Here's what our customers are saying.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal reveal-delay-1">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">"Professional and courteous from start to finish. They replaced our entire AC system and the installers were incredibly skilled. Our house has never been this comfortable. Highly recommend!"</p>
+          <p class="review-author">Robert K.</p>
+          <p class="review-source">Yelp &bull; Anaheim Hills</p>
+        </div>
+        <div class="review-card reveal reveal-delay-2">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">"Honest service — they actually told me I didn't need a new unit and just fixed the issue. That kind of integrity is rare. Will never call anyone else for HVAC work."</p>
+          <p class="review-author">Maria L.</p>
+          <p class="review-source">Google &bull; Fullerton</p>
+        </div>
+        <div class="review-card reveal reveal-delay-3">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">"Called at 8 AM on a Saturday — they were at my house by 10 AM. Technician was clean, efficient, and explained everything. Annual maintenance customer for life now."</p>
+          <p class="review-author">David T.</p>
+          <p class="review-source">Yelp &bull; Yorba Linda</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-visual reveal">
+        <div class="about-flag">&#127482;&#127480;</div>
+        <h3>Founded by a Veteran.<br>Built on Service.</h3>
+        <p>Mike Andersen served in the United States Army from 2001 to 2005. After his service, he founded Veteran Air in 2009 with a simple mission: bring the same discipline, honesty, and dedication to HVAC that the military instilled in him.</p>
+        <div class="about-military-badge"><i class="fa-solid fa-shield-halved"></i> U.S. Army Veteran &bull; 2001–2005</div>
+      </div>
+      <div class="about-content reveal">
+        <p class="label section-label">Our Story</p>
+        <h2>15 Years of Keeping Orange County Comfortable</h2>
+        <p>What started as one veteran with a truck and a toolbox has grown into Orange County's highest-rated HVAC company. With over 477 five-star reviews and thousands of homes serviced, Veteran Air has earned the trust of families and businesses across the region.</p>
+        <p>We're not a franchise. We're not a call center. When you call Veteran Air, you're calling a local team that lives and works in your community. That's why we treat every job — big or small — like it's our own home.</p>
+        <div class="about-details">
+          <div class="about-detail"><i class="fa-solid fa-calendar"></i> <span>Est. 2009</span></div>
+          <div class="about-detail"><i class="fa-solid fa-location-dot"></i> <span>Anaheim, CA</span></div>
+          <div class="about-detail"><i class="fa-solid fa-users"></i> <span>Local OC Team</span></div>
+          <div class="about-detail"><i class="fa-solid fa-certificate"></i> <span>CA Licensed</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICE AREAS ═══ -->
+  <section class="areas" id="areas">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label section-label">Service Areas</p>
+        <h2>Serving All of Orange County</h2>
+        <p>Wherever you are in OC, we're just a phone call away.</p>
+      </div>
+      <div class="areas-grid reveal">
+        <div class="area-tag">Anaheim</div>
+        <div class="area-tag">Fullerton</div>
+        <div class="area-tag">Yorba Linda</div>
+        <div class="area-tag">Placentia</div>
+        <div class="area-tag">Orange</div>
+        <div class="area-tag">Tustin</div>
+        <div class="area-tag">Irvine</div>
+        <div class="area-tag">Santa Ana</div>
+        <div class="area-tag">Garden Grove</div>
+        <div class="area-tag">Huntington Beach</div>
+        <div class="area-tag">Costa Mesa</div>
+        <div class="area-tag">Newport Beach</div>
+        <div class="area-tag">Mission Viejo</div>
+        <div class="area-tag">Lake Forest</div>
+        <div class="area-tag">Brea</div>
+        <div class="area-tag">All of OC →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="cta-content reveal">
+        <h2>Ready for Reliable HVAC Service?</h2>
+        <p>Get a free estimate today. No obligation, no pressure — just honest advice from a team that puts your comfort first.</p>
+        <div class="cta-btns">
+          <a href="tel:6572891824" class="btn btn-white"><i class="fa-solid fa-phone"></i> (657) 289-1824</a>
+          <a href="mailto:info@veteranairusa.net" class="btn btn-outline"><i class="fa-solid fa-envelope"></i> Email Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text">VETERAN <span>AIR</span></div>
+          <p>Veteran-owned HVAC company serving Orange County since 2009. Licensed, insured, and committed to your comfort.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/VeteranAirUSA" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/VeteranAirUSA" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.yelp.com/biz/veteran-air-anaheim-4" target="_blank" rel="noopener" aria-label="Yelp"><i class="fa-brands fa-yelp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">AC Repair</a></li>
+            <li><a href="#services">AC Installation</a></li>
+            <li><a href="#services">Heating Repair</a></li>
+            <li><a href="#services">Maintenance</a></li>
+            <li><a href="#services">Ductwork</a></li>
+            <li><a href="#services">Commercial HVAC</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#areas">Service Areas</a></li>
+            <li><a href="https://www.veteranairusa.net/privacy" target="_blank" rel="noopener">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:6572891824"><i class="fa-solid fa-phone" style="width:16px"></i> (657) 289-1824</a></li>
+            <li><a href="mailto:info@veteranairusa.net"><i class="fa-solid fa-envelope" style="width:16px"></i> info@veteranairusa.net</a></li>
+            <li><i class="fa-solid fa-location-dot" style="width:16px"></i> 2925 E Ricker Way<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anaheim, CA 92806</li>
+            <li style="margin-top:8px"><strong>Hours:</strong><br>Mon–Fri: 7AM–6PM<br>Sat: 8AM–4PM<br>Sun: Closed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 Veteran Air USA. All rights reserved. CA Contractor License.</span>
+        <span>Veteran United Services Inc.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ STICKY MOBILE CTA ═══ -->
+  <div class="sticky-cta">
+    <a href="tel:6572891824"><i class="fa-solid fa-phone"></i> Call Veteran Air — (657) 289-1824</a>
+  </div>
+
+  <!-- ═══ JAVASCRIPT ═══ -->
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Header shadow on scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
